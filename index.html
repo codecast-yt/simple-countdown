@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    #timer {
+      background-color: black;
+      color: white;
+      font-size: 48pt;
+      text-align: right;
+      padding-right: 8px;
+      padding-left: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div style="float: right">
+    <span id="timer">
+      Time goes here
+    </span>
+  </div>
+
+  <script>
+    function update() {
+
+      let time = "22:00:00";
+
+      let now = new Date();
+      now = now.toTimeString().split(' ')[0];
+
+      console.log("NOW: " + now);
+      console.log("TARGET: " + time);
+      // todo: calculate time diff
+
+      let now_tokens = now.split(":");
+      let now_h = parseInt(now_tokens[0]);
+      let now_m = parseInt(now_tokens[1]);
+      let now_s = parseInt(now_tokens[2]);
+
+      let now_totalseconds = now_h * 3600 + now_m * 60 + now_s;
+      console.log(now_totalseconds);
+
+      let time_tokens = time.split(":");
+      let time_h = parseInt(time_tokens[0]);
+      let time_m = parseInt(time_tokens[1]);
+      let time_s = parseInt(time_tokens[2]);
+      let time_totalseconds =
+        (time_h * 3600) +
+        (time_m * 60) + (time_s);
+      console.log(time_totalseconds);
+
+      let diff_seconds = now_totalseconds - time_totalseconds;
+
+      console.log("diff: " + diff_seconds);
+
+      let el = document.getElementById("timer");
+
+      let h = parseInt(diff_seconds / 3600);
+
+      console.log("diff before h: " + diff_seconds);
+      diff_seconds = diff_seconds - (h * 3600);
+      console.log("diff after h: " + diff_seconds);
+
+      let m = parseInt(diff_seconds / 60);
+
+      diff_seconds = diff_seconds - (m * 60);
+      console.log("diff after m: " + diff_seconds);
+      let s = diff_seconds;
+
+      h = Math.abs(h);
+      m = Math.abs(m);
+      s = Math.abs(s);
+
+      h = h < 10 ? "0" + h : h;
+      m = m < 10 ? "0" + m : m;
+      s = s < 10 ? "0" + s : s;
+
+      let rendered_time = h + ":" + m + ":" + s;
+      el.innerText = rendered_time;
+
+      // set timer for every second (1000 ms)
+      setTimeout(update, 1000);
+    }
+
+    // update on first load
+    update();
+  </script>
+</body>
+
+</html>
